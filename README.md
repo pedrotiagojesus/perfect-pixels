@@ -14,7 +14,7 @@ Application that transforms images. The background of the images is removed, the
 2. Extract from php_imagick-….zip the other DLL files (they may start with CORE_RL, FILTER, IM_MOD_RL, or ImageMagickObject depending on the version), and save them to the PHP root directory (where you have php.exe), or to a directory in your PATH variable
 3. Add this line to your php.ini file:
 extension=php_imagick.dll
-Restart the Apache
+4. Restart the Apache
 ```
 
 -   In Laragon terminal, install [PyTorch](https://pytorch.org/get-started/locally/).
@@ -49,6 +49,6 @@ php perfect-pixels\public\index.php
 -   Images being formatted to SVG.
 -   Improve or remove background image
 
-## Suporte
+## Suport
 
 For support, email pedrotiagojesus1995@gmail.com.
