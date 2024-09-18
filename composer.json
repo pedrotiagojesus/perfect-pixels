@@ -21,8 +21,5 @@
             "app/config.php",
             "app/helpers/Functions.php"
         ]
-    },
-    "require": {
-        "pear/http_request2": "^2.6"
     }
 }
