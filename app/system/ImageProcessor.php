@@ -2,12 +2,10 @@
 
 namespace App\System;
 
-class ImageProcessor
-{
+use App\Controllers\App;
 
-    const DPI = 300;
-    const IMAGE_WIDTH = 4267;
-    const IMAGE_HEIGHT = 4267;
+class ImageProcessor extends App
+{
 
     /**
      * Get images from input folder
@@ -20,47 +18,40 @@ class ImageProcessor
 
     public function processImage(object $imageData = null)
     {
-
-        /**
-         * DPI
-         */
-        echo "Change DPI...";
-        echo PHP_EOL;
-
         $resolution = new Resolution();
-        $imageData->imagick = $resolution->changeDpi($imageData->imagick, self::DPI);
-
-        echo "DPI changed!";
-        echo PHP_EOL;
-
-        $this->saveTmp($imageData);
-        $imageData = $this->loadTmp($imageData);
+        $backgroundRemover = new BackgroundRemover();
 
         /**
          * Remove background
          */
-        echo "Remove background...";
-        echo PHP_EOL;
+        $this->log("Remove background... ", false);
 
-        $backgroundRemover = new BackgroundRemover();
         $backgroundRemover->removeBackground($imageData->original_path, $imageData->tmp_path);
 
-        echo "Background removed!";
-        echo PHP_EOL;
+        $this->log("Done!");
 
+        $imageData = $this->loadTmp($imageData);
+
+        /**
+         * DPI
+         */
+        $this->log("Change DPI... ", false);
+
+        $imageData->imagick = $resolution->changeDpi($imageData->imagick);
+
+        $this->log("Done!");
+
+        $this->saveTmp($imageData);
         $imageData = $this->loadTmp($imageData);
 
         /**
          * Dimension
          */
-        echo "Change dimension...";
-        echo PHP_EOL;
+        $this->log("Change dimension... ", false);
 
-        $resolution = new Resolution();
-        $imageData->imagick = $resolution->changeDimension($imageData->imagick, self::IMAGE_WIDTH, self::IMAGE_HEIGHT);
+        $imageData->imagick = $resolution->changeDimension($imageData->imagick);
 
-        echo "Dimension changed!";
-        echo PHP_EOL;
+        $this->log("Done!");
 
         $this->saveTmp($imageData);
         $imageData = $this->loadTmp($imageData);
@@ -68,14 +59,11 @@ class ImageProcessor
         /**
          * DPI
          */
-        echo "Change DPI...";
-        echo PHP_EOL;
+        $this->log("Change DPI... ", false);
 
-        $resolution = new Resolution();
-        $imageData->imagick = $resolution->changeDpi($imageData->imagick, self::DPI);
+        $imageData->imagick = $resolution->changeDpi($imageData->imagick);
 
-        echo "DPI changed!";
-        echo PHP_EOL;
+        $this->log("Done!");
 
         $this->saveTmp($imageData);
         $imageData = $this->loadTmp($imageData);
@@ -86,11 +74,8 @@ class ImageProcessor
     private function loadTmp(object $imageData = null)
     {
 
-        // Load config
-        $config = Config::getInstance();
-
         $imageClass = new Image();
-        return $imageClass->load($config->get("path_image_tmp"), $imageData->tmp_name);
+        return $imageClass->load(PATH_IMAGE_TMP, $imageData->tmp_name);
     }
 
     private function saveOutput(object $imageData = null)

@@ -5,67 +5,55 @@ namespace App\Controllers;
 use App\System\Image;
 use App\System\ImageProcessor;
 
-final class Main
+class Main extends App
 {
 
     public function index()
     {
-
-        $scriptStart = scriptInit();
-
-        logStart();
+        $this->setScriptStart();
+        $this->logStart();
 
         // Get images from input folder
+        $this->log("Collect images to be processed");
         $imageProcessor = new ImageProcessor();
         $inputFileArr = $imageProcessor->getInputImage();
 
         if (count($inputFileArr) == 0) {
-            echo "No images work with!";
-            echo PHP_EOL;
+
+            $this->log("No images work with!");
+            $this->logEnd();
             die();
         }
 
-        echo "Found " . count($inputFileArr) . " images!";
-        echo PHP_EOL;
+        $msg = "Found " . count($inputFileArr) . " images!";
+        $this->log($msg);
+
         foreach ($inputFileArr as $inputFile) {
 
-            echo PHP_EOL;
-            echo "--------------------------------" . PHP_EOL;
-            echo "Loading image data - " . $inputFile;
-            echo PHP_EOL;
-
-            var_dump(PATH_IMAGE_INPUT);
-            var_dump(realpath(PATH_IMAGE_INPUT));
-            die();
+            $this->log();
+            $this->log("--------------------------------");
+            $this->log();
+            $this->log("Loading image data - " . $inputFile);
 
             // Load image data 
             $imageClass = new Image();
             $imageData = $imageClass->load(PATH_IMAGE_INPUT, $inputFile);
 
             if (is_null($imageData)) {
-                echo 'Error loading image!';
-                echo PHP_EOL;
+                $this->log("Error loading image!");
                 continue;
             }
 
-            var_dump($imageData);
-            die();
+            $this->log("Image data loaded.");
+            $this->log();
 
-            /*
-    
-    
+            // Process image
             $imageProcessor->processImage($imageData);
-            echo PHP_EOL;
-            */
         }
 
-        $scriptEnd = scriptEnd();
-        $scriptTime = scriptTime($scriptStart, $scriptEnd);
+        $this->log();
+        $this->log("--------------------------------");
 
-        echo PHP_EOL;
-        echo PHP_EOL;
-        echo 'Script in took ' .  $scriptTime . ' seconds';
-        echo PHP_EOL;
-        logEnd();
+        $this->logEnd();
     }
 }

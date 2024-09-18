@@ -1,23 +1,5 @@
 <?php
 
-function scriptInit()
-{
-
-    return microtime(true);
-}
-
-function scriptEnd()
-{
-
-    return microtime(true);
-}
-
-function scriptTime(float $scriptStart = 0, float $scriptEnd = 0)
-{
-
-    return number_format(($scriptEnd - $scriptStart), 2);
-}
-
 function getFilesFromFolder(string $path = "")
 {
 
@@ -33,20 +15,4 @@ function getFilesFromFolder(string $path = "")
     });
 
     return $fileArr;
-}
-
-function logStart()
-{
-    echo PHP_EOL;
-    echo "<===========Perfect Fixels=============>";
-    echo PHP_EOL;
-    echo PHP_EOL;
-}
-
-function logEnd()
-{
-    echo PHP_EOL;
-    echo PHP_EOL;
-    echo "<======================================>";
-    echo PHP_EOL;
 }
