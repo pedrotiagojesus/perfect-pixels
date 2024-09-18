@@ -1,0 +1,22 @@
+{
+    "name": "pjesus/perfect-pixels",
+    "description": "Prepara as imagens para serem colocadas à venda.",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Pedro Jesus",
+            "email": "pedrotiagojesus1995@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\Controllers\\": ["app/controllers"],
+            "App\\System\\": ["app/system"]
+        },
+        "files": [
+            "app/config.php",
+            "app/helpers/Functions.php"
+        ]
+    }
+}
